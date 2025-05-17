@@ -13,7 +13,9 @@ const envSchema = z.object({
     .transform((val) => Number(val))
     .refine((val) => !isNaN(val), {
       message: "PORT must be a valid number",
-    }).default("3000"),
+    })
+    .default("3000"),
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("debug"),
   DB_HOST: z.string().default("localhost"),
   DB_PORT: z.string().transform(Number).default("27017"),
   DB_NAME: z.string(),
@@ -39,6 +41,7 @@ const envParsed = parsedEnv.data;
 export const env = Object.freeze({
   NODE_ENV: envParsed.NODE_ENV,
   PORT: envParsed.PORT,
+  LOG_LEVEL: envParsed.LOG_LEVEL,
 
   DB: {
     HOST: envParsed.DB_HOST,

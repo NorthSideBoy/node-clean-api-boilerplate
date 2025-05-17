@@ -3,7 +3,7 @@ import { AppError } from "../../../shared/errors/base/app.error";
 
 export const errorHandler = (
   err: unknown,
-  req: Request,
+  _req: Request,
   res: Response,
   _next: NextFunction
 ): void => {
