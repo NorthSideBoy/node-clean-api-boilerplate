@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import { format, transports } from "winston";
-import Logger from "../../../core/contracts/services/logger.service";
+import Logger from "../../../core/contracts/logger.contract";
 
 export type LogLevel = "error" | "warn" | "info" | "debug";
 
@@ -15,8 +15,8 @@ export class WinstonLogger implements Logger {
         format.timestamp(),
         format.printf(
           ({ timestamp, level, message }) =>
-            `[${timestamp}] ${level}: ${message}`,
-        ),
+            `[${timestamp}] ${level}: ${message}`
+        )
       ),
       transports: [new transports.Console()],
     });
