@@ -1,0 +1,1 @@
+export { UserOutputSchema, UserOutputDTO } from "../../../../application/DTOs/user/user.schema";

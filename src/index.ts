@@ -3,7 +3,7 @@ import "./container/index";
 import { env } from "./config/env.config";
 import createServer from "./interfaces/express/server";
 import { container } from "tsyringe";
-import Logger from "./core/contracts/logger.contract";
+import Logger from "./core/contracts/services/logger.service";
 const logger = container.resolve<Logger>("Logger");
 
 const start = async (): Promise<void> => {

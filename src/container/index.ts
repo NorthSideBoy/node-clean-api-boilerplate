@@ -1,3 +1,3 @@
-import "./adapters/adapters.di"
+import "./adapters/container.adapters"
 
 import "./modules/user.module"

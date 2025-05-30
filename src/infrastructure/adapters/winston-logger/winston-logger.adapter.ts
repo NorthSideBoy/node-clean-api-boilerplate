@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import { format, transports } from "winston";
-import Logger from "../../../core/contracts/logger.contract";
+import Logger from "../../../core/contracts/services/logger.service";
 
 export type LogLevel = "error" | "warn" | "info" | "debug";
 
