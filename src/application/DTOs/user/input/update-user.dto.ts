@@ -1,1 +1,3 @@
-export { UpdateUserSchema, UpdateUserInputDTO } from "../../../../application/DTOs/user/user.schema";
+import { UpdateUserDTO } from "../../../codecs/user/update-user.codec";
+
+export type UpdateUserInputDTO = UpdateUserDTO;

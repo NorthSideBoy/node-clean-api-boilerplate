@@ -1,2 +1,3 @@
-// Re-exports for semantic clarity
-export { CreateUserSchema, CreateUserInputDTO } from "../../../../application/DTOs/user/user.schema";
+import { CreateUserDTO } from "../../../codecs/user/create-user.codec";
+
+export type CreateUserInputDTO = CreateUserDTO;

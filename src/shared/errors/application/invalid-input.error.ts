@@ -1,7 +1,10 @@
-import { AppError } from "../base/app.error";
+import AppError from "../base/app.error";
 
-export class InvalidInputError extends AppError {
-  constructor(message: string = "Invalid Input") {
-    super(message, 400);
+export default class InvalidInputError extends AppError {
+  constructor(error: any) {
+    const messages = error.errors.map(
+      (issue: any) => `${issue.path}: ${issue.message}`
+    );
+    super(messages.join(", "), 400);
   }
 }

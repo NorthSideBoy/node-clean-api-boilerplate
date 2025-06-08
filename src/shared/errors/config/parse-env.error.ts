@@ -1,4 +1,4 @@
-import { ConfigError } from "../base/config.error";
+import ConfigError from "../base/config.error";
 
 export class ParseEnvError extends ConfigError {
   constructor(errors: string[]) {

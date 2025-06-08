@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AppError } from "../../../shared/errors/base/app.error";
+import AppError from "../../../shared/errors/base/app.error";
 
 export const errorHandler = (
   err: unknown,
@@ -16,7 +16,6 @@ export const errorHandler = (
   }
 
   if (err instanceof Error) {
-    console.error(err.stack);
     res.status(500).json({
       message: "Internal Server Error",
       error: err.message,

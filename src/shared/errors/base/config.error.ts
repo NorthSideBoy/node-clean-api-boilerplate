@@ -1,4 +1,4 @@
-export class ConfigError extends Error {
+export default class ConfigError extends Error {
   public readonly details?: any;
 
   constructor(message: string, details?: any) {

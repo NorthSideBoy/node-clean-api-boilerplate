@@ -1,1 +1,3 @@
-export { UserOutputSchema, UserOutputDTO } from "../../../../application/DTOs/user/user.schema";
+import { UserDTO } from "../../../codecs/user/user.codec";
+
+export type UserOutputDTO = UserDTO

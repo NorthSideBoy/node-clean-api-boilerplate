@@ -1,8 +1,6 @@
-interface Logger {
-  error(message: any): void;
-  warning(message: string): void;
-  info(message: string): void;
-  debug(message: string): void;
+export default interface ILogger {
+  error(message: unknown): void;
+  warning(message: any): void;
+  info(message: any): void;
+  debug(message: any): void;
 }
-
-export default Logger;
