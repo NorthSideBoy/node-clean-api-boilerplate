@@ -4,7 +4,8 @@
       "src"
     ],
     "ignore": [
-      "src/routes.ts"
+      "src/interfaces/express/routes/routes.ts",
+      "src/interfaces/express/docs/swagger.json"
     ],
     "ext": "ts"
   }

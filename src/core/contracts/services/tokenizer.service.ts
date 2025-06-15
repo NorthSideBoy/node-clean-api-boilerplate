@@ -1,4 +1,5 @@
+import TokenPayload from "../../domain/value-objects/token-payload.vo";
 export default interface ITokenizer {
-  generate(payload: Record<string, any>): string;
-  verify(token: string): Record<string, any>;
+  generate(payload: TokenPayload): string;
+  verify(token: string): TokenPayload;
 }

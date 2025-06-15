@@ -4,13 +4,14 @@ export interface UserProps {
   id?: string;
   name: string;
   email: string;
+  password: string;
   role: UserRole;
-  password?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  status?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export class User {
+export class User implements UserProps {
   constructor(
     private readonly props: {
       id?: string;
@@ -18,8 +19,9 @@ export class User {
       email: string;
       password: string;
       role: UserRole;
-      createdAt: Date;
-      updatedAt: Date;
+      status?:boolean;
+      createdAt?: Date;
+      updatedAt?: Date;
     }
   ) {}
 
@@ -38,10 +40,37 @@ export class User {
   get role(): UserRole {
     return this.props.role;
   }
-  get createdAt(): Date {
+  get status(): boolean |undefined {
+    return this.props.status
+  }
+  get createdAt(): Date | undefined {
     return this.props.createdAt;
   }
-  get updatedAt(): Date {
+  get updatedAt(): Date | undefined {
     return this.props.updatedAt;
+  }
+  toComplete(): Required<UserProps> {
+    if (
+      !this.id ||
+      !this.name ||
+      !this.email ||
+      !this.password ||
+      !this.role ||
+      !this.status ||
+      !this.createdAt ||
+      !this.updatedAt
+    )
+      throw new Error("Incomplete User instance");
+
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      password: this.password,
+      role: this.role,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    };
   }
 }

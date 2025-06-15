@@ -5,6 +5,5 @@ export default class ConfigError extends Error {
     super(message);
     this.name = new.target.name;
     this.details = details;
-    Error.captureStackTrace(this, this.constructor);
   }
 }

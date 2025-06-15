@@ -17,14 +17,14 @@ export const errorHandler = (
 
   if (err instanceof Error) {
     res.status(500).json({
-      message: "Internal Server Error",
+      message: "InternalServerError",
       error: err.message,
     });
     return;
   }
 
   res.status(500).json({
-    message: "Internal Server Error",
+    message: "InternalServerError",
     error: "Unknown error",
   });
 };

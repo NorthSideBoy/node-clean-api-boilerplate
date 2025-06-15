@@ -1,8 +1,8 @@
-import { User as PrismaUser } from "../../generated/prisma";
-import { User } from "../../core/domain/entities/user.entity";
-import { UserRole } from "../../core/domain/enums/user.enum";
+import { Users as PrismaUser } from "@prisma/client";
+import { User } from "../../../../core/domain/entities/user.entity";
+import { UserRole } from "../../../../core/domain/enums/user.enum";
 
-export class UserPrismaMapper {
+export default class UserPrismaMapper {  
   static toDomain(prismaUser: PrismaUser): User {
     return new User({
       id: prismaUser.id,
@@ -10,6 +10,7 @@ export class UserPrismaMapper {
       email: prismaUser.email,
       password: prismaUser.password,
       role: prismaUser.role as UserRole,
+      status: prismaUser.status,
       createdAt: prismaUser.createdAt,
       updatedAt: prismaUser.updatedAt,
     });
@@ -21,9 +22,10 @@ export class UserPrismaMapper {
       name: user.name,
       email: user.email,
       password: user.password,
-      role: user.role,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    } as PrismaUser;
+      role: user.role as UserRole,
+      status: user.status!,
+      createdAt: user.createdAt!,
+      updatedAt: user.updatedAt!,
+    } as PrismaUser
   }
 }

@@ -3,5 +3,9 @@ export type ValidationResult<T> =
   | { success: false; error: unknown };
 
 export default interface IValidator {
-  decode<T>(schema: unknown, input: unknown, strict?: boolean): ValidationResult<T>;
+  decode<T>(
+    schema: unknown,
+    input: unknown,
+    strict?: boolean
+  ): ValidationResult<T>;
 }

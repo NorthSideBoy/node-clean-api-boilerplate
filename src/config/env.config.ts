@@ -5,6 +5,7 @@ import { ParseEnvError } from "../shared/errors/config/parse-env.error";
 dotenv.config();
 
 const envSchema = z.object({
+  HOST: z.string().default("127.0.0.1"),
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
@@ -16,7 +17,7 @@ const envSchema = z.object({
     })
     .default("3000"),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("debug"),
-  DB_HOST: z.string().default("localhost"),
+  DB_HOST: z.string().default("127.0.0.1"),
   DB_PORT: z.string().transform(Number).default("27017"),
   DB_NAME: z.string(),
   DB_USER: z.string(),
@@ -39,6 +40,7 @@ if (!parsedEnv.success) {
 const envParsed = parsedEnv.data;
 
 export const env = Object.freeze({
+  HOST: envParsed.HOST,
   NODE_ENV: envParsed.NODE_ENV,
   PORT: envParsed.PORT,
   LOG_LEVEL: envParsed.LOG_LEVEL,

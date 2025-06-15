@@ -1,17 +1,48 @@
 import { container } from "tsyringe";
-import IUserRepository from "../../core/contracts/repositories/user.repository";
-import UserPrismaRepository from "../../infrastructure/adapters/prisma/user-prisma.adapter";
+import IUsersRepository from "../../core/contracts/repositories/user.repository";
+import UsersPrismaRepository from "../../infrastructure/adapters/repositories/prisma/users.adapter";
 import IHasher from "../../core/contracts/services/hasher.service";
-import BcryptHasher from "../../infrastructure/adapters/hasher/bcrypt.adapter";
+import BcryptHasher from "../../infrastructure/adapters/hashers/bcrypt.adapter";
+import ICreateUserUseCase from "../../core/contracts/use-cases/user/create-user.use-case";
 import CreateUserUseCase from "../../application/use-cases/user/create-user.use-case";
+import ILoginUserUseCase from "../../core/contracts/use-cases/user/login-user.use-case";
+import LoginUserUseCase from "../../application/use-cases/user/login-user.use-case";
+import IGetUserUseCase from "../../core/contracts/use-cases/user/get-user.use-case";
+import GetUserUseCase from "../../application/use-cases/user/get-user.use-case";
+import IGetUsersUseCase from "../../core/contracts/use-cases/user/get-users.use-case";
+import GetUsersUseCase from "../../application/use-cases/user/get-users.use-case";
+import IUpdateUserProfileUseCase from "../../core/contracts/use-cases/user/update-user-profile.use-case";
+import UpdateUserProfileUseCase from "../../application/use-cases/user/update-user-profile.use-case";
+import IUpdateUserPasswordUseCase from "../../core/contracts/use-cases/user/update-user-password.use-case";
+import UpdateUserPasswordUseCase from "../../application/use-cases/user/update-user-password.use-case";
+import IDeleteUserUseCase from "../../core/contracts/use-cases/user/delete-user.use-case";
+import DeleteUserUseCase from "../../application/use-cases/user/delete-user.use-case";
 
 container
-  .register<IUserRepository>("UserRepository", {
-    useClass: UserPrismaRepository,
+  .register<IUsersRepository>("UserRepository", {
+    useClass: UsersPrismaRepository,
   })
-  .register<IHasher>("IHasher", {
+  .register<IHasher>("Hasher", {
     useClass: BcryptHasher,
   })
-  .register<CreateUserUseCase>("CreateUserUseCase", {
+  .register<ICreateUserUseCase>("CreateUserUseCase", {
     useClass: CreateUserUseCase,
+  })
+  .register<ILoginUserUseCase>("LoginUserUseCase", {
+    useClass: LoginUserUseCase,
+  })
+  .register<IGetUserUseCase>("GetUserUseCase", {
+    useClass: GetUserUseCase,
+  })
+  .register<IGetUsersUseCase>("GetUsersUseCase", {
+    useClass: GetUsersUseCase,
+  })
+  .register<IUpdateUserProfileUseCase>("UpdateUserProfileUseCase", {
+    useClass: UpdateUserProfileUseCase,
+  })
+  .register<IUpdateUserPasswordUseCase>("UpdateUserPasswordUseCase", {
+    useClass: UpdateUserPasswordUseCase,
+  })
+  .register<IDeleteUserUseCase>("DeleteUserUseCase", {
+    useClass: DeleteUserUseCase,
   });

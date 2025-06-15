@@ -1,0 +1,528 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserRole": {
+				"enum": [
+					"admin",
+					"user"
+				],
+				"type": "string"
+			},
+			"UserOutputDTO": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"status",
+					"role",
+					"email",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"AuthenticatedUserOutputDTO": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/UserOutputDTO"
+					},
+					{
+						"properties": {
+							"token": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"token"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"CreateUserInputDTO": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"status": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"name",
+					"email",
+					"password",
+					"role"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"LoginUserInputDTO": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"OperationResultOutputDTO": {
+				"properties": {
+					"meta": {},
+					"message": {
+						"type": "string"
+					},
+					"affected": {
+						"type": "number",
+						"format": "double"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object"
+			},
+			"UpdateUserProfileInputDTO": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"status": {
+						"type": "boolean"
+					}
+				},
+				"type": "object",
+				"additionalProperties": true
+			},
+			"UpdateUserPasswordInputDTO": {
+				"properties": {
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": true
+			}
+		},
+		"securitySchemes": {
+			"BearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "clean-api-boilerplate",
+		"version": "1.0.0",
+		"description": "Node.js Clean Architecture API with TypeScript, Prisma, Redis, and Swagger.",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "Said Lucena ",
+			"email": "saidlucena519@gmail.com",
+			"url": "https://github.com/NorthSideBoy"
+		}
+	},
+	"paths": {
+		"/users/register": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthenticatedUserOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"409": {
+						"description": "ConflictError"
+					},
+					"501": {
+						"description": "InternalServerError"
+					}
+				},
+				"summary": "Register user",
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"anyOf": [
+									{
+										"$ref": "#/components/schemas/CreateUserInputDTO"
+									},
+									{}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthenticatedUserOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"401": {
+						"description": "UnauthorizedError"
+					},
+					"501": {
+						"description": "InternalServerError"
+					}
+				},
+				"summary": "Login user",
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"anyOf": [
+									{
+										"$ref": "#/components/schemas/LoginUserInputDTO"
+									},
+									{}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"404": {
+						"description": "NotFoundError"
+					}
+				},
+				"summary": "Get a user by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"description": "The user's identifier",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateProfileById",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OperationResultOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"404": {
+						"description": "NotFoundError"
+					}
+				},
+				"summary": "Update user profile by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"description": "The user's identifier",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"anyOf": [
+									{
+										"$ref": "#/components/schemas/UpdateUserProfileInputDTO"
+									},
+									{}
+								]
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteById",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OperationResultOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"404": {
+						"description": "NotFoundError"
+					}
+				},
+				"summary": "Delete user by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"description": "The user's identifier",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserOutputDTO"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Get all users",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/{id}/password": {
+			"put": {
+				"operationId": "UpdatePasswordById",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OperationResultOutputDTO"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "InvalidInputError"
+					},
+					"404": {
+						"description": "NotFoundError"
+					},
+					"409": {
+						"description": "ConflictError"
+					}
+				},
+				"summary": "Update user password by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"BearerAuth": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"description": "The user's identifier",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"anyOf": [
+									{
+										"$ref": "#/components/schemas/UpdateUserPasswordInputDTO"
+									},
+									{}
+								]
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

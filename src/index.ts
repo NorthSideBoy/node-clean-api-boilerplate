@@ -1,19 +1,19 @@
 import "reflect-metadata";
-import "./container/index";
+import "./container";
 import { env } from "./config/env.config";
+import { getLogger } from "./shared/utils/getters/logger";
+import { bootstrap } from "./bootstrap";
 import createServer from "./interfaces/express/server";
-import { container } from "tsyringe";
-import ILogger from "./core/contracts/services/logger.service";
-const logger = container.resolve<ILogger>("Logger");
-import { connectToDatabase } from "./infrastructure/adapters/prisma/prisma-client";
+const logger = getLogger();
 
 const start = async (): Promise<void> => {
   try {
+    await bootstrap();
     const app = await createServer();
     app.listen(env.PORT, () => {
       logger.info(`Server is running on port ${env.PORT}`);
+      logger.info(`Http documentation in http://${env.HOST}:${env.PORT}/docs`);
     });
-    await connectToDatabase()
   } catch (error) {
     logger.error(error);
   }

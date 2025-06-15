@@ -4,7 +4,7 @@ import ILogger from "../../../core/contracts/services/logger.service";
 
 export type LogLevel = "error" | "warn" | "info" | "debug";
 
-export class WinstonLogger implements ILogger {
+export default class WinstonLogger implements ILogger {
   private logger: winston.Logger;
 
   constructor(logLevel: LogLevel) {

@@ -1,0 +1,30 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw",
+  "controllerPathGlobs": [
+    "src/interfaces/express/controllers/*.ts"
+  ],
+  "spec": {
+    "outputDirectory": "src/interfaces/express/docs",
+    "specVersion": 3,
+    "basePath": "/",
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
+  },
+  "routes": {
+    "routesDir": "src/interfaces/express/routes",
+    "middleware": "express",
+    "authenticationModule": "src/interfaces/express/middlewares/auth.middleware.ts",
+    "iocModule": "src/container/tsoa.ioc.ts"
+  }
+}

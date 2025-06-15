@@ -5,10 +5,12 @@ export const nameSchema = z
   .string()
   .min(2, "Name must be at least 2 characters")
   .max(15, "Name must be at most 15 characters");
-  
+
 export const emailSchema = z.string().email("Invalid email format");
 
 export const roleSchema = nativeEnum(UserRole);
+
+export const statusSchema = z.boolean().default(true);
 
 export const passwordSchema = z
   .string()

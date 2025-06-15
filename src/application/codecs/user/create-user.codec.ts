@@ -4,13 +4,13 @@ import {
   emailSchema,
   roleSchema,
   passwordSchema,
+  statusSchema,
 } from "./fields.codec";
 
 export const CreateUserCodec = z.object({
   name: nameSchema,
   email: emailSchema,
   role: roleSchema,
+  status: statusSchema,
   password: passwordSchema,
 });
-
-export type CreateUserDTO = z.infer<typeof CreateUserCodec>;

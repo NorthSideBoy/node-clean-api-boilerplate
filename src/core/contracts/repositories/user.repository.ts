@@ -1,9 +1,10 @@
 import { User } from "../../domain/entities/user.entity";
-export default interface IUserRepository {
+export default interface IUsersRepository {
   create(data: User): Promise<User>;
   findById(id: string): Promise<User | null>;
+  findByEmail(email: string): Promise<User | null>;
   findAll(): Promise<User[]>;
-  update(id: string, data: User): Promise<User>;
-  delete(id: string): Promise<void>;
-  updatePassword(id: string, newPassword: string): Promise<void>;
+  update(id: string, data: Partial<User>): Promise<number>;
+  delete(id: string): Promise<number>;
+  updatePassword(id: string, password: string): Promise<number>;
 }
