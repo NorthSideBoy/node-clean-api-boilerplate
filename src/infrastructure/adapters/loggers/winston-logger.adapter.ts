@@ -13,20 +13,10 @@ export default class WinstonLogger implements ILogger {
       format: format.combine(
         format.colorize(),
         format.timestamp(),
-        format.printf(
-          ({
-            timestamp,
-            level,
-            message,
-            name,
-            type = "App",
-            service = "System",
-          }) => {
-            if (name)
-              return `[${timestamp}] ${type}[${service}] ${level}<${name}>: ${message}`;
-            return `[${timestamp}] ${type}[${service}] ${level}: ${message}`;
-          }
-        )
+        format.printf(({ timestamp, level, message, name }) => {
+          if (name) return `[${timestamp}] ${level}<${name}>: ${message}`;
+          return `[${timestamp}] ${level}: ${message}`;
+        })
       ),
       transports: [new transports.Console()],
     });
